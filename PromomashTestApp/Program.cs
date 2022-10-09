@@ -12,6 +12,7 @@ services.AddDbContext<AppDbContext>();
        
 services.AddScoped<ICountryRepository, CountryRepository>();
 services.AddScoped<IProvinceRepository, ProvinceRepository>();
+services.AddScoped<IUserRepository, UserRepository>();
 
 services.AddControllersWithViews();
 services.AddValidatorsFromAssemblyContaining<UserRegisterModelValidator>();

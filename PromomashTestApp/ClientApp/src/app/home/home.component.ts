@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component } from '@angular/core';
 import {
   AbstractControl,
@@ -14,6 +15,7 @@ export enum RegistrationSteps {
   Step1 = 1,
   Step2,
   Completed,
+  Error,
 }
 
 @Component({
@@ -81,7 +83,12 @@ export class HomeComponent {
       })
       .subscribe({
         next: (_) => (this.currentStep = RegistrationSteps.Completed),
-        error: (e) => console.error(e),
+        error: (e: HttpErrorResponse) => {
+          if (e.status === 409) {
+            this.currentStep = RegistrationSteps.Error;
+          }
+          console.error(e);
+        },
       });
   }
 
@@ -92,12 +99,10 @@ export class HomeComponent {
 
   onCountryChange(countryId: string): void {
     this.countriesLoading = true;
-    this.apiService
-      .getProvinces(countryId)
-      .subscribe((result) => {
-        this.provinces = result; 
-        this.countriesLoading = false;
-      });
+    this.apiService.getProvinces(countryId).subscribe((result) => {
+      this.provinces = result;
+      this.countriesLoading = false;
+    });
   }
 
   public validateStep1() {

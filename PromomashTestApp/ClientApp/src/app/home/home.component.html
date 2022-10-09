@@ -149,7 +149,7 @@
                     >Province is a required field
                   </label>
                 </div>
-
+                
                 <div class="d-flex justify-content-center">
                   <button
                     type="submit"
@@ -161,6 +161,11 @@
               </div>
               <div *ngIf="currentStep === 3" class="card-body p-5">
                 <h3>Registration complete!</h3>
+              </div>
+
+              <div *ngIf="currentStep === 4" class="card-body p-5">
+                <h3 class="mb-3">Registration failed!</h3>
+                <div>User with this login already registered. Please try another one.</div>
               </div>
             </div>
           </form>
